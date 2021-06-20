@@ -19,6 +19,14 @@ const CartIcon = ({toggleCartDropdown, itemCount}) => (
   It’s frequently referred to as just mapState for short.
   It is called every time the store state changes.
   It receives the entire store state, and should return an object of data this component needs.
+
+  Here instead of SelectCartItemsCount we can use createStructuredSelector as below
+  Make sure to import createStructuredSelector
+  
+  const mapStateToProps = createStructuredSelector({
+    itemCount: selectCartItemsCount
+  });
+     
 *
 */
 const mapStateToProps = (state) => (console.log(state), {
