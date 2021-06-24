@@ -1,25 +1,33 @@
 import React from 'react';
 import './directory.styles.scss';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectDirectorySections } from '../../redux/directory/directory.selectors';
 import MenuItem from '../menu-item/menu-item.component';
-import SECTIONS_DATA from '../directory/sections.data';
+//import SECTIONS_DATA from '../directory/sections.data';
 
-class Directory extends React.Component {
-    constructor(){
-        super();
-        this.state = {
-           sections: SECTIONS_DATA
-        }
-    }
+const Directory = ({directory}) => {
+  return (
+    <div className='directory-menu'>
+      {directory.map(({id, ...otherSectionProps}) => (
+        <MenuItem key= {id} {...otherSectionProps}/>
+      ))}  
+    </div>  
+  );
+};
 
-    render(){
-        return(
-          <div className='directory-menu'>
-            {this.state.sections.map(({id, ...otherSectionProps}) => (
-              <MenuItem key= {id} {...otherSectionProps}/>
-            ))}  
-          </div>  
-        );
-    }
-}
+   
+/* Way to USE mapStateToProps without "reselect"
+ * 
+   const mapStateToProps = ({directory}) =>(console.log(directory),{
+     directory: directory.sections
+   });
+ *
+ */ 
 
-export default Directory;
+const mapStateToProps = createStructuredSelector({
+  directory: selectDirectorySections
+});
+
+export default connect(mapStateToProps)(Directory);
