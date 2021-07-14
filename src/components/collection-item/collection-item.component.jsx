@@ -16,7 +16,13 @@ const CollectionItem = ({item, addItem}) => {
             <span className='name'>{name}</span>
             <span className='price'>{price}</span>
        </div>
-          <CustomButton onClick={() => addItem(item)} inverted>Add to Cart</CustomButton>
+          {/* <CustomButton onClick={() => addItem(item)} inverted>Add to Cart</CustomButton>           Added classes as per Styled component created for Custom Button Component */}
+               <CustomButton
+                    className='custom-button'
+                    onClick={() => addItem(item)}
+                    inverted>
+                    Add to cart
+               </CustomButton>
     </div> );
 };
 
