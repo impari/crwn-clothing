@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import memoize from 'lodash.memoize';
+//import memoize from 'lodash.memoize';
 
 /* const COLLECTION_ID_MAP = {
     hats: 1,
@@ -9,11 +9,11 @@ import memoize from 'lodash.memoize';
     mens: 5
 }; */
 
-const selectShop = state => state.shop;
+const selectShop = (state) => state.shop;
 
 export const selectCollections = createSelector(
     [selectShop],
-    shop => shop.collections
+    (shop) => shop.collections
 );
 
 /**
@@ -24,7 +24,9 @@ export const selectCollections = createSelector(
 
  export const selectCollectionsForPreview = createSelector(
     [selectCollections],
-    collections => Object.keys(collections).map(key => collections[key])
+    //collections => Object.keys(collections).map(key => collections[key])
+    (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
  );
 
 /**
@@ -43,11 +45,8 @@ export const selectCollections = createSelector(
  * 
  */
 
-export const selectCollection = memoize((collectionUrlParam) => {
-   return createSelector(
-        [selectCollections],
 
-        /**Note for CHapter 151
+/** Note for CHapter 151
          * Previously our SHOP DATA has an array but it was costly to iterate over an array everytime
          * Thus we Normalize it by changing into Object.
          * Now we have to change below code to read an Array not an Objetc
@@ -56,8 +55,17 @@ export const selectCollection = memoize((collectionUrlParam) => {
            collections => {
             return collections.find(collection => collection.id === COLLECTION_ID_MAP[collectionUrlParam])
            }
-         */
-       
+               
+
+export const selectCollection = memoize((collectionUrlParam) => {
+   return createSelector(
+        [selectCollections],
         collections => collections[collectionUrlParam]
     )
-});
+}); 
+*/
+
+export const selectCollection = (collectionUrlParam) =>
+  createSelector([selectCollections], (collections) =>
+    collections ? collections[collectionUrlParam] : null
+);
